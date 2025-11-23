@@ -12,6 +12,28 @@
 
     <p>Per ora è solo un placeholder, così possiamo iniziare a costruire la struttura.</p>
 
+<div id="map" style="height: 400px; width: 100%; margin-bottom: 20px;"></div>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+  // Inizializza la mappa centrata sulla Sicilia
+  var map = L.map('map').setView([37.6, 13.0], 8); // lat/lng Sicilia, zoom 8
+
+  // Aggiungi mappa OpenStreetMap
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  // Aggiungi marker per Erice
+  var ericeMarker = L.marker([38.0236, 12.5716]).addTo(map);
+  ericeMarker.bindPopup('<b>Erice</b><br><a href="places/erice.html">Vai alla pagina</a>');
+</script>
+    
     <h2>Luoghi disponibili</h2>
     <ul>
         <li><a href="places/erice.html">Erice</a></li>
