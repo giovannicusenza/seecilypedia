@@ -16,15 +16,17 @@
       }
       h1 { text-align: center; margin-bottom: 10px; }
       #map { height: 500px; width: 100%; margin-bottom: 20px; border-radius: 8px; }
-      ul { columns: 2; list-style: none; padding: 0; }
+      ul { columns: 2; list-style: none; padding: 0; margin: 0; }
       ul li { margin: 5px 0; }
       a { color: #0b6ef6; text-decoration: none; }
       a:hover { text-decoration: underline; }
+      @media (max-width: 600px) {
+        ul { columns: 1; }
+      }
     </style>
 </head>
 <body>
     <h1>Seecilypedia Guides</h1>
-
     <p>Questa pagina ospita la mappa interattiva e la lista dei luoghi della Sicilia occidentale e orientale.</p>
 
     <div id="map"></div>
@@ -38,10 +40,10 @@
       // Inizializza la mappa centrata sulla Sicilia
       var map = L.map('map').setView([37.6, 13.0], 7);
 
-      // Layer minimale e pulito
+      // Layer OSM gratuito e pulito
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-}).addTo(map);
+        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+      }).addTo(map);
 
       // Lista dei luoghi
       var luoghi = [
@@ -75,8 +77,8 @@
 
       // Aggiungi marker e popup sulla mappa
       luoghi.forEach(function(luogo) {
-        var marker = L.marker([luogo.lat, luogo.lng]).addTo(map);
-        marker.bindPopup('<b>' + luogo.nome + '</b><br><a href="' + luogo.link + '">Vai alla pagina</a>');
+        L.marker([luogo.lat, luogo.lng]).addTo(map)
+         .bindPopup('<b>' + luogo.nome + '</b><br><a href="' + luogo.link + '">Vai alla pagina</a>');
       });
 
       // Genera lista sotto la mappa
