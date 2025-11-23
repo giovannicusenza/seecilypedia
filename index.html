@@ -1,53 +1,96 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guides – Seecilypedia</title>
-
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-
-<style>
-  body {
-    font-family: system-ui, Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: #fefefe;
-    color: #222;
-  }
-  h1 { text-align: center; margin-bottom: 10px; }
-  #map { height: 500px; width: 100%; border-radius: 8px; margin-bottom: 20px; }
-  ul { columns: 2; list-style: none; padding: 0; margin: 0; }
-  ul li { margin: 5px 0; }
-  a { color: #0b6ef6; text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  @media (max-width: 600px) { ul { columns: 1; } }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seecilypedìa</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      font-family: system-ui, Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #fefefe;
+      color: #222;
+      text-align: center;
+    }
+    header {
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+    header p {
+      font-size: 1rem;
+      margin: 5px 0 20px;
+      color: #555;
+    }
+    #map {
+      height: 500px;
+      width: 80%;
+      max-width: 800px;
+      margin: 0 auto 30px;
+      border-radius: 8px;
+    }
+    .places-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      padding: 0;
+      list-style: none;
+    }
+    .place-btn {
+      display: flex;
+      align-items: center;
+      background: #0b6ef6;
+      color: white;
+      border-radius: 8px;
+      padding: 8px 12px;
+      text-decoration: none;
+      width: 220px;
+      transition: background 0.2s;
+    }
+    .place-btn:hover {
+      background: #094bb5;
+    }
+    .place-btn img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 10px;
+      background: #ccc; /* placeholder colore immagine */
+    }
+  </style>
 </head>
 <body>
 
-<h1>Seecilypedia Guides</h1>
-<p>Questa pagina ospita la mappa interattiva e la lista dei luoghi della Sicilia occidentale e orientale.</p>
+<header>
+  <h1>Seecilypedìa</h1>
+  <p>YOUR ENCYCLOPEDIA TO DISCOVER SICILY</p>
+</header>
 
 <div id="map"></div>
 
-<h2>Luoghi disponibili</h2>
-<ul id="places-list"></ul>
+<ul class="places-list" id="places-list">
+  <!-- Pulsanti dei luoghi generati via JS -->
+</ul>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-  // Inizializza la mappa centrata sulla Sicilia
-  var map = L.map('map', { zoomControl: true }).setView([37.6, 13.0], 7);
+  // Centriamo la mappa sulla Sicilia
+  var map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView([37.6, 13.3], 8);
 
-  // Tile layer minimale gratuito
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-      maxZoom: 18
+  // Layer minimal (nessuna strada)
+  L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
   }).addTo(map);
 
-  // Lista dei luoghi
+  // Lista dei luoghi con coordinate corrette
   var luoghi = [
     { nome: "Palermo", lat: 38.1157, lng: 13.3615, link: "places/palermo.html" },
     { nome: "Custonaci", lat: 38.0167, lng: 12.6167, link: "places/custonaci.html" },
@@ -77,22 +120,24 @@
     { nome: "Taormina", lat: 37.8515, lng: 15.2870, link: "places/taormina.html" }
   ];
 
-  // Aggiungi marker sulla mappa
-  luoghi.forEach(function(luogo){
-    L.marker([luogo.lat, luogo.lng])
-      .addTo(map)
-      .bindPopup('<b>' + luogo.nome + '</b><br><a href="' + luogo.link + '">Vai alla pagina</a>');
+  // Aggiungi marker minimalisti sulla mappa
+  luoghi.forEach(function(luogo) {
+    L.circleMarker([luogo.lat, luogo.lng], {
+      radius: 6,
+      color: "#0b6ef6",
+      fillColor: "#0b6ef6",
+      fillOpacity: 0.8
+    }).addTo(map).bindPopup('<b>' + luogo.nome + '</b><br><a href="' + luogo.link + '">Vai alla pagina</a>');
   });
 
-  // Popola la lista HTML
+  // Genera lista dei pulsanti
   var ul = document.getElementById('places-list');
-  luoghi.forEach(function(luogo){
+  luoghi.forEach(function(luogo) {
     var li = document.createElement('li');
-    li.innerHTML = '<a href="' + luogo.link + '">' + luogo.nome + '</a>';
+    li.innerHTML = '<a class="place-btn" href="' + luogo.link + '"><img src="https://via.placeholder.com/40" alt="' + luogo.nome + '"> ' + luogo.nome + '</a>';
     ul.appendChild(li);
   });
 </script>
 
 </body>
 </html>
-
