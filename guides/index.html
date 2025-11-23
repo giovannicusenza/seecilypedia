@@ -39,9 +39,9 @@
       var map = L.map('map').setView([37.6, 13.0], 7);
 
       // Layer minimale e pulito
-      L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors &copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
-      }).addTo(map);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+}).addTo(map);
 
       // Lista dei luoghi
       var luoghi = [
