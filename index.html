@@ -33,6 +33,7 @@
       max-width: 800px;
       margin: 0 auto 30px;
       border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     .places-list {
       display: flex;
@@ -83,9 +84,9 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
   // Centriamo la mappa sulla Sicilia
-  var map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView([37.6, 13.3], 8);
+  var map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView([37.6, 13.4], 8);
 
-  // Layer minimal (nessuna strada)
+  // Layer minimal (solo isola, senza strade)
   L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
   }).addTo(map);
