@@ -1,37 +1,98 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Seecilypedia — Guide della Sicilia</title>
-  <style>
-    body{font-family:system-ui,Arial,Helvetica,sans-serif;line-height:1.5;margin:0;color:#222}
-    header{padding:28px;text-align:center;background:#f7f7f7}
-    main{max-width:1000px;margin:28px auto;padding:0 18px}
-    a.btn{display:inline-block;padding:10px 16px;background:#0b6ef6;color:#fff;border-radius:6px;text-decoration:none}
-    footer{padding:18px;text-align:center;color:#666;font-size:0.9rem}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guides – Seecilypedia</title>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+  body {
+    font-family: system-ui, Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #fefefe;
+    color: #222;
+  }
+  h1 { text-align: center; margin-bottom: 10px; }
+  #map { height: 500px; width: 100%; border-radius: 8px; margin-bottom: 20px; }
+  ul { columns: 2; list-style: none; padding: 0; margin: 0; }
+  ul li { margin: 5px 0; }
+  a { color: #0b6ef6; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  @media (max-width: 600px) { ul { columns: 1; } }
+</style>
 </head>
 <body>
-  <header>
-    <h1>seecilypedìa</h1>
-    <p>YOUR ENCYCLOPEDIA TO DISCOVER SICILY</p>
-  <a class="btn" href="./guides/index.html">Vai alle Guides</a>
-  </header>
 
-  <main>
-    <h2>Cosa è Seecilypedìa</h2>
-    <p>Seecilypedia è una raccolta di guide e informazioni utili per viaggiare in Sicilia. Qui trovi itinerari, storia, posti dove mangiare e suggerimenti sul territorio.</p>
+<h1>Seecilypedia Guides</h1>
+<p>Questa pagina ospita la mappa interattiva e la lista dei luoghi della Sicilia occidentale e orientale.</p>
 
-    <h3>Prossimi passi</h3>
-    <ul>
-      <li>Pagina “Guides” con mappa interattiva</li>
-      <li>Pagine per ciascun luogo con sezioni: History, Attractions, Food, Tips</li>
-    </ul>
-  </main>
+<div id="map"></div>
 
-  <footer>
-    © Seecilypedia — <a href="mailto:info@seecilypedia.com">info@seecilypedia.com</a>
-  </footer>
+<h2>Luoghi disponibili</h2>
+<ul id="places-list"></ul>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  // Inizializza la mappa centrata sulla Sicilia
+  var map = L.map('map', { zoomControl: true }).setView([37.6, 13.0], 7);
+
+  // Tile layer minimale gratuito
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      maxZoom: 18
+  }).addTo(map);
+
+  // Lista dei luoghi
+  var luoghi = [
+    { nome: "Palermo", lat: 38.1157, lng: 13.3615, link: "places/palermo.html" },
+    { nome: "Custonaci", lat: 38.0167, lng: 12.6167, link: "places/custonaci.html" },
+    { nome: "Castellammare del Golfo", lat: 38.0250, lng: 12.8550, link: "places/castellammare.html" },
+    { nome: "Erice", lat: 38.0236, lng: 12.5716, link: "places/erice.html" },
+    { nome: "Trapani", lat: 38.0170, lng: 12.5333, link: "places/trapani.html" },
+    { nome: "Marsala", lat: 37.7986, lng: 12.4381, link: "places/marsala.html" },
+    { nome: "Mazara del Vallo", lat: 37.6550, lng: 12.5889, link: "places/mazara.html" },
+    { nome: "Segesta", lat: 38.0333, lng: 12.8167, link: "places/segesta.html" },
+    { nome: "Gibellina", lat: 37.6733, lng: 12.8778, link: "places/gibellina.html" },
+    { nome: "Selinunte", lat: 37.6183, lng: 12.8450, link: "places/selinunte.html" },
+    { nome: "Menfi", lat: 37.5275, lng: 12.9333, link: "places/menfi.html" },
+    { nome: "Montevago", lat: 37.5733, lng: 13.0375, link: "places/montevago.html" },
+    { nome: "Santa Margherita di Belice", lat: 37.6583, lng: 13.0214, link: "places/smb.html" },
+    { nome: "Sambuca di Sicilia", lat: 37.5467, lng: 12.8394, link: "places/sambuca.html" },
+    { nome: "Sciacca", lat: 37.5050, lng: 13.0967, link: "places/sciacca.html" },
+    { nome: "Realmonte", lat: 37.2933, lng: 13.5847, link: "places/realmonte.html" },
+    { nome: "Agrigento", lat: 37.3111, lng: 13.5764, link: "places/agrigento.html" },
+    { nome: "Favara", lat: 37.3083, lng: 13.5797, link: "places/favara.html" },
+    { nome: "Ragusa", lat: 36.9239, lng: 14.7300, link: "places/ragusa.html" },
+    { nome: "Modica", lat: 36.8583, lng: 14.7678, link: "places/modica.html" },
+    { nome: "Portopalo di Capopassero", lat: 36.7342, lng: 15.1167, link: "places/portopalo.html" },
+    { nome: "Pachino", lat: 36.7000, lng: 15.1167, link: "places/pachino.html" },
+    { nome: "Noto", lat: 36.8900, lng: 15.0700, link: "places/noto.html" },
+    { nome: "Siracusa", lat: 37.0755, lng: 15.2866, link: "places/siracusa.html" },
+    { nome: "Catania", lat: 37.5079, lng: 15.0830, link: "places/catania.html" },
+    { nome: "Taormina", lat: 37.8515, lng: 15.2870, link: "places/taormina.html" }
+  ];
+
+  // Aggiungi marker sulla mappa
+  luoghi.forEach(function(luogo){
+    L.marker([luogo.lat, luogo.lng])
+      .addTo(map)
+      .bindPopup('<b>' + luogo.nome + '</b><br><a href="' + luogo.link + '">Vai alla pagina</a>');
+  });
+
+  // Popola la lista HTML
+  var ul = document.getElementById('places-list');
+  luoghi.forEach(function(luogo){
+    var li = document.createElement('li');
+    li.innerHTML = '<a href="' + luogo.link + '">' + luogo.nome + '</a>';
+    ul.appendChild(li);
+  });
+</script>
+
 </body>
 </html>
+
