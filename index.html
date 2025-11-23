@@ -83,15 +83,17 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-  // Centriamo la mappa sulla Sicilia
+  // Mappa centrata sulla Sicilia
   var map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView([37.6, 13.4], 8);
 
-  // Layer minimal (solo isola, senza strade)
-  L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>'
+  // Layer minimal Carto Light
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
   }).addTo(map);
 
-  // Lista dei luoghi con coordinate corrette
+  // Lista dei luoghi
   var luoghi = [
     { nome: "Palermo", lat: 38.1157, lng: 13.3615, link: "places/palermo.html" },
     { nome: "Custonaci", lat: 38.0167, lng: 12.6167, link: "places/custonaci.html" },
@@ -121,7 +123,7 @@
     { nome: "Taormina", lat: 37.8515, lng: 15.2870, link: "places/taormina.html" }
   ];
 
-  // Aggiungi marker minimalisti sulla mappa
+  // Marker minimalisti
   luoghi.forEach(function(luogo) {
     L.circleMarker([luogo.lat, luogo.lng], {
       radius: 6,
@@ -131,7 +133,7 @@
     }).addTo(map).bindPopup('<b>' + luogo.nome + '</b><br><a href="' + luogo.link + '">Vai alla pagina</a>');
   });
 
-  // Genera lista dei pulsanti
+  // Pulsanti sotto la mappa
   var ul = document.getElementById('places-list');
   luoghi.forEach(function(luogo) {
     var li = document.createElement('li');
