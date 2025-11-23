@@ -83,13 +83,13 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-  // Mappa centrata sulla Sicilia
-  var map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView([37.6, 13.4], 8);
+  // Mappa centrata sulla Sicilia con zoom ottimale
+  var map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView([37.6, 14], 7.5);
 
-  // Layer minimal Carto Light
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-      subdomains: 'abcd',
+  // Layer minimale gratuito da OpenStreetMap (cartina base senza autenticazione)
+  L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      subdomains: 'abc',
       maxZoom: 19
   }).addTo(map);
 
