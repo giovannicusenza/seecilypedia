@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erice – Seecilypedia</title>
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0;}
+        header {height: 200px; background: #888; display: flex; align-items: center; justify-content: center; color: white;}
+        header h1 {margin: 0;}
+        nav {margin: 12px; text-align: center;}
+        nav a {margin: 0 8px; text-decoration: none; padding: 6px 12px; background: #0b6ef6; color: white; border-radius: 4px;}
+        section {padding: 12px;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Erice</h1>
+    </header>
+    <nav>
+        <a href="#history">History</a>
+        <a href="#attractions">Attractions</a>
+        <a href="#food">Food</a>
+        <a href="#tips">Tips</a>
+    </nav>
+
+    <section id="history">
+        <h2>History</h2>
+        <p>Breve storia di Erice…</p>
+    </section>
+    <section id="attractions">
+        <h2>Attractions</h2>
+        <p>Cosa visitare a Erice…</p>
+    </section>
+    <section id="food">
+        <h2>Food</h2>
+        <p>Dove mangiare a Erice…</p>
+    </section>
+    <section id="tips">
+        <h2>Tips</h2>
+        <p>Consigli pratici per visitare Erice…</p>
+    </section>
+
+    <script>
+        // Smooth scroll per i link interni
+        document.querySelectorAll('nav a').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({behavior: 'smooth'});
+            });
+        });
+    </script>
+</body>
+</html>
